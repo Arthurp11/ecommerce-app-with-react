@@ -1266,3 +1266,46 @@ a {
   justify-content: flex-end;
   gap: 12px;
 }
+
+/* Pagamento */
+.payment-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  border-color: var(--accent-border);
+
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+.payment-simulate {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.payment-note {
+  font-size: 13px;
+}
+
+.badge.payment-pending {
+  color: #b26a00;
+  background: rgba(178, 106, 0, 0.12);
+}
+.badge.payment-approved {
+  color: var(--success);
+  background: var(--success-bg);
+}
+.badge.payment-rejected,
+.badge.payment-refunded {
+  color: var(--error);
+  background: var(--error-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .badge.payment-pending {
+    color: #ffcc80;
+  }
+}

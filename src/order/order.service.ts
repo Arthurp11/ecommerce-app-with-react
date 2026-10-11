@@ -1,5 +1,6 @@
 import { request } from '../lib/api'
 import type { Paginated } from '../catalog/catalog.service'
+import type { Payment } from '../payment/payment.service'
 
 export type OrderStatus = 'pending_payment' | 'paid' | 'shipped' | 'delivered' | 'cancelled'
 
@@ -41,6 +42,8 @@ export interface Order {
   totalInCents: number
   shippingAddress: ShippingAddress
   items: OrderItem[]
+  /** Só vem no detalhe do pedido (`GET /orders/:id`). */
+  payments?: Payment[]
   createdAt: string
   updatedAt: string
 }

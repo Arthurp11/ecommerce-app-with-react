@@ -15,6 +15,7 @@ const PATTERNS: [RegExp, (match: RegExpExecArray) => string][] = [
   ],
   [/^(.+) is no longer available$/, ([, name]) => `${name} não está mais disponível.`],
   [/^Order with ID \d+ can no longer be cancelled$/, () => 'Este pedido não pode mais ser cancelado.'],
+  [/^Order with ID \d+ is not awaiting payment$/, () => 'Este pedido não está mais aguardando pagamento.'],
 ]
 
 function translate(message: string) {
