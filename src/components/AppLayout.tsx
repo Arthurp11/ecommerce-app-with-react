@@ -22,6 +22,7 @@ export function AppLayout() {
               <>
                 <NavLink to="/orders">Pedidos</NavLink>
                 <NavLink to="/account/addresses">Endereços</NavLink>
+                {user.role === 'admin' && <NavLink to="/admin">Admin</NavLink>}
               </>
             )}
           </nav>

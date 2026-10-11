@@ -1,6 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { AuthProvider } from './auth/AuthContext'
-import { GuestRoute, ProtectedRoute } from './auth/routes'
+import { AdminCategoriesPage } from './admin/AdminCategoriesPage'
+import { AdminLayout } from './admin/AdminLayout'
+import { AdminRoute, GuestRoute, ProtectedRoute } from './auth/routes'
 import { CartProvider } from './cart/CartContext'
 import { AppLayout } from './components/AppLayout'
 import { AccountPage } from './pages/AccountPage'
@@ -46,6 +48,13 @@ function App() {
                 <Route path="/account/addresses" element={<AddressesPage />} />
                 <Route path="/account/addresses/new" element={<NewAddressPage />} />
                 <Route path="/account/addresses/:id/edit" element={<EditAddressPage />} />
+              </Route>
+
+              <Route element={<AdminRoute />}>
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Navigate to="categories" replace />} />
+                  <Route path="categories" element={<AdminCategoriesPage />} />
+                </Route>
               </Route>
             </Route>
 

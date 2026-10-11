@@ -15,6 +15,17 @@ export function ProtectedRoute() {
   return <Outlet />
 }
 
+// Só admins; os demais voltam para a home (a API também bloqueia com 403).
+export function AdminRoute() {
+  const { user, loading } = useAuth()
+  const location = useLocation()
+
+  if (loading) return <FullPageLoader />
+  if (!user) return <Navigate to="/login" replace state={{ from: location }} />
+  if (user.role !== 'admin') return <Navigate to="/" replace />
+  return <Outlet />
+}
+
 // Páginas de login/cadastro: quem já está logado vai para a home.
 export function GuestRoute() {
   const { user, loading } = useAuth()

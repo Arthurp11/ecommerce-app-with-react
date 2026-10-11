@@ -15,6 +15,12 @@ const PATTERNS: [RegExp, (match: RegExpExecArray) => string][] = [
   ],
   [/^(.+) is no longer available$/, ([, name]) => `${name} não está mais disponível.`],
   [/^Order with ID \d+ can no longer be cancelled$/, () => 'Este pedido não pode mais ser cancelado.'],
+  [/^Category .+ already exists$/, () => 'Já existe uma categoria com este nome.'],
+  [
+    /^Category with ID \d+ still has (\d+) product\(s\)/,
+    ([, count]) => `Esta categoria ainda tem ${count} produto(s). Mova-os para outra categoria antes de excluir.`,
+  ],
+  [/^You do not have permission/, () => 'Você não tem permissão para esta ação.'],
   [/^Accounts with order history cannot be deleted$/, () => 'Contas com histórico de pedidos não podem ser excluídas.'],
   [/^Order with ID \d+ is not awaiting payment$/, () => 'Este pedido não está mais aguardando pagamento.'],
 ]
