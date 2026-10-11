@@ -5,6 +5,7 @@ import { AppLayout } from './components/AppLayout'
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { HomePage } from './pages/HomePage'
 import { LoginPage } from './pages/LoginPage'
+import { ProductPage } from './pages/ProductPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
 
@@ -25,6 +26,7 @@ function App() {
           <Route element={<AppLayout />}>
             {/* Vitrine pública: o catálogo não exige login. */}
             <Route path="/" element={<HomePage />} />
+            <Route path="/products/:slug" element={<ProductPage />} />
 
             <Route element={<ProtectedRoute />}>{/* Área logada: carrinho, pedidos, conta... */}</Route>
           </Route>
