@@ -3,6 +3,8 @@ import { AuthProvider } from './auth/AuthContext'
 import { GuestRoute, ProtectedRoute } from './auth/routes'
 import { CartProvider } from './cart/CartContext'
 import { AppLayout } from './components/AppLayout'
+import { EditAddressPage, NewAddressPage } from './pages/AddressFormPage'
+import { AddressesPage } from './pages/AddressesPage'
 import { CartPage } from './pages/CartPage'
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { HomePage } from './pages/HomePage'
@@ -33,6 +35,9 @@ function App() {
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/cart" element={<CartPage />} />
+                <Route path="/account/addresses" element={<AddressesPage />} />
+                <Route path="/account/addresses/new" element={<NewAddressPage />} />
+                <Route path="/account/addresses/:id/edit" element={<EditAddressPage />} />
               </Route>
             </Route>
 

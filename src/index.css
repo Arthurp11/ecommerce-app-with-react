@@ -766,12 +766,17 @@ a {
   font-size: 14px;
 }
 
-.cart-heading {
+.page-heading {
   display: flex;
-  align-items: baseline;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px 16px;
   margin-bottom: 16px;
+
+  .page-title {
+    margin: 0;
+  }
 }
 
 .cart-layout {
@@ -900,4 +905,127 @@ a {
 .cart-summary-continue {
   text-align: center;
   font-size: 14px;
+}
+
+/* Endereços */
+.page-narrow {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.empty-state-card {
+  padding: 48px 24px;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: 12px;
+}
+
+.back-link {
+  display: inline-block;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.badge-accent {
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.btn-link-danger {
+  color: var(--error);
+}
+
+.address-list {
+  display: grid;
+  gap: 12px;
+}
+
+.address-card {
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  address {
+    font-style: normal;
+    font-size: 15px;
+    margin-top: 6px;
+  }
+}
+
+.address-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-h);
+}
+
+.address-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  @media (max-width: 480px) {
+    padding: 16px;
+  }
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.form-field select {
+  font: inherit;
+  color: var(--text-h);
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+  }
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--text-h);
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
 }

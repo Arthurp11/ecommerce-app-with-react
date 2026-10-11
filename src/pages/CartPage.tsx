@@ -59,7 +59,7 @@ export function CartPage() {
 
   return (
     <section className="page">
-      <div className="cart-heading">
+      <div className="page-heading">
         <h1 className="page-title">Carrinho</h1>
         <button
           type="button"
