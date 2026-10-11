@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { Link, useLocation, useParams } from 'react-router'
-import { formatZipCode } from '../address/address.service'
 import { Alert } from '../components/Alert'
 import { ApiError } from '../lib/api'
 import { getErrorMessage } from '../lib/errors'
-import { formatDateTime, formatPrice } from '../lib/format'
+import { formatDateTime } from '../lib/format'
 import { useAsync } from '../lib/useAsync'
+import { OrderAddressCard, OrderItemsCard, OrderPaymentsCard } from '../order/OrderSections'
 import { OrderStatusBadge } from '../order/OrderStatusBadge'
 import { orderService, type Order } from '../order/order.service'
 import { PaymentPanel } from '../payment/PaymentPanel'
-import { PAYMENT_STATUS_LABELS, type Payment } from '../payment/payment.service'
+import type { Payment } from '../payment/payment.service'
 
 const PAYMENT_RESULT: Record<Payment['status'], { variant: 'success' | 'error'; message: string } | undefined> = {
   pending: undefined,
@@ -78,7 +78,6 @@ export function OrderDetailPage() {
     )
   }
 
-  const address = order.shippingAddress
   const paymentFeedback = paymentResult && PAYMENT_RESULT[paymentResult.status]
 
   return (
@@ -113,70 +112,9 @@ export function OrderDetailPage() {
         />
       )}
 
-      <div className="order-card">
-        <h2>Itens</h2>
-        <ul className="order-items">
-          {order.items.map((item) => (
-            <li key={item.id}>
-              <div>
-                <span className="order-item-name">{item.productName}</span>
-                <span className="order-item-meta">
-                  {item.quantity} × {formatPrice(item.unitPriceInCents)}
-                </span>
-              </div>
-              <strong>{formatPrice(item.lineTotalInCents)}</strong>
-            </li>
-          ))}
-        </ul>
-
-        <div className="order-totals">
-          <div className="cart-summary-row">
-            <span>Subtotal</span>
-            <span>{formatPrice(order.subtotalInCents)}</span>
-          </div>
-          <div className="cart-summary-row">
-            <span>Frete</span>
-            <span>{order.shippingInCents > 0 ? formatPrice(order.shippingInCents) : 'Grátis'}</span>
-          </div>
-          <div className="cart-summary-row cart-summary-total">
-            <span>Total</span>
-            <strong>{formatPrice(order.totalInCents)}</strong>
-          </div>
-        </div>
-      </div>
-
-      <div className="order-card">
-        <h2>Entrega</h2>
-        <address className="order-address">
-          <strong>{address.recipientName}</strong>
-          <br />
-          {address.street}, {address.number}
-          {address.complement && ` — ${address.complement}`}
-          <br />
-          {address.neighborhood}, {address.city} - {address.state}
-          <br />
-          CEP {formatZipCode(address.zipCode)}
-        </address>
-      </div>
-
-      {order.payments && order.payments.length > 0 && (
-        <div className="order-card">
-          <h2>Histórico de pagamentos</h2>
-          <ul className="order-items">
-            {order.payments.map((payment) => (
-              <li key={payment.id}>
-                <div>
-                  <span className="order-item-name">{formatPrice(payment.amountInCents)}</span>
-                  <span className="order-item-meta">{formatDateTime(payment.createdAt)}</span>
-                </div>
-                <span className={`badge payment-${payment.status}`}>
-                  {PAYMENT_STATUS_LABELS[payment.status]}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <OrderItemsCard order={order} />
+      <OrderAddressCard order={order} />
+      <OrderPaymentsCard order={order} />
 
       {order.status === 'pending_payment' && (
         <div className="order-actions">

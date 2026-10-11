@@ -25,6 +25,10 @@ const PATTERNS: [RegExp, (match: RegExpExecArray) => string][] = [
   ],
   [/^You do not have permission/, () => 'Você não tem permissão para esta ação.'],
   [/^Accounts with order history cannot be deleted$/, () => 'Contas com histórico de pedidos não podem ser excluídas.'],
+  [
+    /^Cannot change order \d+ from \w+ to \w+$/,
+    () => 'Esta mudança de status não é permitida (o pedido pode ter mudado). Recarregue a página.',
+  ],
   [/^Order with ID \d+ is not awaiting payment$/, () => 'Este pedido não está mais aguardando pagamento.'],
 ]
 

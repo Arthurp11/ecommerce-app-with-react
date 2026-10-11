@@ -1,9 +1,29 @@
 import { request } from '../lib/api'
-import type { Category, Product } from '../catalog/catalog.service'
+import type { Category, Paginated, Product } from '../catalog/catalog.service'
+import type { Order, OrderQuery, OrderStatus } from '../order/order.service'
 
 export interface CategoryInput {
   name: string
   description?: string
+}
+
+export interface AdminOrder extends Order {
+  user: { id: number; name: string; email: string }
+}
+
+// Espelha ADMIN_STATUS_TRANSITIONS da API: para onde o admin pode mover cada status.
+export const ADMIN_STATUS_TRANSITIONS: Record<OrderStatus, OrderStatus[]> = {
+  pending_payment: ['cancelled'],
+  paid: ['shipped', 'cancelled'],
+  shipped: ['delivered'],
+  delivered: [],
+  cancelled: [],
+}
+
+export const STATUS_ACTION_LABELS: Partial<Record<OrderStatus, string>> = {
+  shipped: 'Marcar como enviado',
+  delivered: 'Marcar como entregue',
+  cancelled: 'Cancelar pedido',
 }
 
 export interface ProductInput {
@@ -35,4 +55,16 @@ export const adminService = {
 
   /** A API não apaga o produto: só marca como inativo (some da loja). */
   deactivateProduct: (id: number) => request<void>(`/products/${id}`, { method: 'DELETE' }),
+
+  listOrders: ({ status, page = 1, limit = 20 }: OrderQuery) => {
+    const params = new URLSearchParams({ page: String(page), limit: String(limit) })
+    if (status) params.set('status', status)
+    return request<Paginated<AdminOrder>>(`/admin/orders?${params}`)
+  },
+
+  /** O detalhe usa o mesmo endpoint do cliente: para admins ele devolve qualquer pedido, com o cliente. */
+  getOrder: (id: number) => request<AdminOrder>(`/orders/${id}`),
+
+  updateOrderStatus: (id: number, status: OrderStatus) =>
+    request<Order>(`/admin/orders/${id}/status`, { method: 'PATCH', body: { status } }),
 }

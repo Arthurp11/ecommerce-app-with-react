@@ -7,6 +7,7 @@ export function AdminLayout() {
       <nav className="admin-tabs" aria-label="Seções do admin">
         <NavLink to="/admin/categories">Categorias</NavLink>
         <NavLink to="/admin/products">Produtos</NavLink>
+        <NavLink to="/admin/orders">Pedidos</NavLink>
       </nav>
       <Outlet />
     </section>

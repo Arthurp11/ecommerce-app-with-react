@@ -1491,3 +1491,7 @@ a {
     align-items: flex-start;
   }
 }
+
+.admin-section .order-actions {
+  justify-content: flex-start;
+}
