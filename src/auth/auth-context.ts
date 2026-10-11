@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import type { User } from './auth.service'
+import type { ProfileInput, User } from './auth.service'
 
 export interface AuthContextValue {
   user: User | null
@@ -7,6 +7,8 @@ export interface AuthContextValue {
   login: (email: string, password: string) => Promise<void>
   register: (name: string, email: string, password: string) => Promise<void>
   logout: () => Promise<void>
+  updateProfile: (input: ProfileInput) => Promise<void>
+  deleteAccount: () => Promise<void>
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null)

@@ -34,7 +34,9 @@ export function AppLayout() {
 
             {loading ? null : user ? (
               <>
-                <span className="app-user">Olá, {user.name.split(' ')[0]}</span>
+                <NavLink to="/account" end className="app-user" title="Minha conta">
+                  Olá, {user.name.split(' ')[0]}
+                </NavLink>
                 <button type="button" className="btn-secondary btn-sm" onClick={logout}>
                   Sair
                 </button>

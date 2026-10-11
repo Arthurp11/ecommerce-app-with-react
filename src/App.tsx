@@ -3,6 +3,7 @@ import { AuthProvider } from './auth/AuthContext'
 import { GuestRoute, ProtectedRoute } from './auth/routes'
 import { CartProvider } from './cart/CartContext'
 import { AppLayout } from './components/AppLayout'
+import { AccountPage } from './pages/AccountPage'
 import { EditAddressPage, NewAddressPage } from './pages/AddressFormPage'
 import { AddressesPage } from './pages/AddressesPage'
 import { CartPage } from './pages/CartPage'
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/checkout" element={<CheckoutPage />} />
                 <Route path="/orders" element={<OrdersPage />} />
                 <Route path="/orders/:id" element={<OrderDetailPage />} />
+                <Route path="/account" element={<AccountPage />} />
                 <Route path="/account/addresses" element={<AddressesPage />} />
                 <Route path="/account/addresses/new" element={<NewAddressPage />} />
                 <Route path="/account/addresses/:id/edit" element={<EditAddressPage />} />

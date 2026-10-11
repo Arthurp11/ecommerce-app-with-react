@@ -309,6 +309,11 @@ a {
 .app-user {
   font-size: 14px;
   color: var(--text-h);
+  font-weight: 500;
+
+  &.active {
+    color: var(--accent);
+  }
 
   @media (max-width: 480px) {
     display: none;
@@ -1307,5 +1312,27 @@ a {
 @media (prefers-color-scheme: dark) {
   .badge.payment-pending {
     color: #ffcc80;
+  }
+}
+
+/* Minha conta */
+.account-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.account-danger {
+  border-color: var(--error-bg);
+
+  h2 {
+    color: var(--error);
+  }
+  p {
+    font-size: 15px;
   }
 }

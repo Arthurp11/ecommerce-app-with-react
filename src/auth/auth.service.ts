@@ -14,6 +14,12 @@ interface MessageResponse {
   message: string
 }
 
+export interface ProfileInput {
+  name?: string
+  email?: string
+  password?: string
+}
+
 export const authService = {
   login: (email: string, password: string) =>
     request<Tokens & MessageResponse>('/auth/login', {
@@ -32,6 +38,11 @@ export const authService = {
   logout: () => request<MessageResponse>('/auth/logout', { method: 'POST' }),
 
   me: () => request<User>('/user/me'),
+
+  updateUser: (id: number, input: ProfileInput) =>
+    request<User>(`/user/${id}`, { method: 'PATCH', body: input }),
+
+  deleteUser: (id: number) => request<void>(`/user/${id}`, { method: 'DELETE' }),
 
   forgotPassword: (email: string) =>
     request<MessageResponse>('/auth/forgot-password', {

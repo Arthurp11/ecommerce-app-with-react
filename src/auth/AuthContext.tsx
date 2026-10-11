@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { SESSION_EXPIRED_EVENT } from '../lib/api'
 import { tokenStorage } from '../lib/tokens'
-import { authService, type User } from './auth.service'
+import { authService, type ProfileInput, type User } from './auth.service'
 import { AuthContext } from './auth-context'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -48,8 +48,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  const updateProfile = useCallback(
+    async (input: ProfileInput) => {
+      if (!user) return
+      const updated = await authService.updateUser(user.id, input)
+
+      // Trocar a senha invalida o refresh token no servidor; logar de novo evita cair a sessão depois.
+      if (input.password) await login(updated.email, input.password)
+      else setUser(updated)
+    },
+    [user, login],
+  )
+
+  const deleteAccount = useCallback(async () => {
+    if (!user) return
+    await authService.deleteUser(user.id)
+    tokenStorage.clear()
+    setUser(null)
+  }, [user])
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, register, logout, updateProfile, deleteAccount }}
+    >
       {children}
     </AuthContext.Provider>
   )
