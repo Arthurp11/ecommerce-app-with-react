@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router'
+import { AddToCart } from '../cart/AddToCart'
 import { catalogService } from '../catalog/catalog.service'
 import { ProductGallery } from '../catalog/ProductGallery'
 import { Alert } from '../components/Alert'
@@ -79,7 +80,7 @@ export function ProductPage() {
                 : 'Em estoque'}
           </p>
 
-          {/* Botão "Adicionar ao carrinho" entra na etapa do carrinho. */}
+          <AddToCart key={product.id} product={product} />
 
           <div className="product-description">
             <h2>Descrição</h2>

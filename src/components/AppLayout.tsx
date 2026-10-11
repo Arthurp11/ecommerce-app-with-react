@@ -1,8 +1,10 @@
 import { Link, NavLink, Outlet } from 'react-router'
 import { useAuth } from '../auth/useAuth'
+import { useCart } from '../cart/useCart'
 
 export function AppLayout() {
   const { user, loading, logout } = useAuth()
+  const { itemCount } = useCart()
 
   return (
     <div className="app-shell">
@@ -19,6 +21,11 @@ export function AppLayout() {
           </nav>
 
           <div className="app-header-actions">
+            <NavLink to="/cart" className="app-cart" aria-label={`Carrinho, ${itemCount} itens`}>
+              Carrinho
+              {itemCount > 0 && <span className="app-cart-count">{itemCount}</span>}
+            </NavLink>
+
             {loading ? null : user ? (
               <>
                 <span className="app-user">Olá, {user.name.split(' ')[0]}</span>
