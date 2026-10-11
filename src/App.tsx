@@ -2,6 +2,8 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { AuthProvider } from './auth/AuthContext'
 import { AdminCategoriesPage } from './admin/AdminCategoriesPage'
 import { AdminLayout } from './admin/AdminLayout'
+import { AdminEditProductPage, AdminNewProductPage } from './admin/AdminProductFormPage'
+import { AdminProductsPage } from './admin/AdminProductsPage'
 import { AdminRoute, GuestRoute, ProtectedRoute } from './auth/routes'
 import { CartProvider } from './cart/CartContext'
 import { AppLayout } from './components/AppLayout'
@@ -54,6 +56,9 @@ function App() {
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<Navigate to="categories" replace />} />
                   <Route path="categories" element={<AdminCategoriesPage />} />
+                  <Route path="products" element={<AdminProductsPage />} />
+                  <Route path="products/new" element={<AdminNewProductPage />} />
+                  <Route path="products/:slug/edit" element={<AdminEditProductPage />} />
                 </Route>
               </Route>
             </Route>

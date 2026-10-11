@@ -16,6 +16,9 @@ const PATTERNS: [RegExp, (match: RegExpExecArray) => string][] = [
   [/^(.+) is no longer available$/, ([, name]) => `${name} não está mais disponível.`],
   [/^Order with ID \d+ can no longer be cancelled$/, () => 'Este pedido não pode mais ser cancelado.'],
   [/^Category .+ already exists$/, () => 'Já existe uma categoria com este nome.'],
+  [/^Product with SKU .+ already exists$/, () => 'Já existe um produto com este SKU.'],
+  [/^Category with ID \d+ not found$/, () => 'Categoria não encontrada.'],
+  [/^each value in images must be a URL address$/, () => 'Todas as imagens precisam ser URLs válidas.'],
   [
     /^Category with ID \d+ still has (\d+) product\(s\)/,
     ([, count]) => `Esta categoria ainda tem ${count} produto(s). Mova-os para outra categoria antes de excluir.`,
@@ -36,8 +39,8 @@ function translate(message: string) {
 export function getErrorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     if (error.status === 429) return 'Muitas tentativas. Aguarde um minuto e tente novamente.'
-    // O checkout junta vários problemas de estoque com "; ".
-    return error.message.split('; ').map(translate).join('\n')
+    // O checkout junta problemas com "; " e a validação devolve uma mensagem por linha.
+    return error.message.split(/; |\n/).map(translate).join('\n')
   }
   if (error instanceof TypeError) return 'Não foi possível conectar ao servidor.'
   return 'Erro inesperado. Tente novamente.'
