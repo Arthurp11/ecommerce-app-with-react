@@ -135,10 +135,15 @@ export function CartPage() {
           </div>
           <p className="cart-summary-note">Frete grátis.</p>
 
-          {/* O checkout entra na etapa de pedidos. */}
-          <button type="button" className="btn-primary btn-block" disabled>
-            Finalizar compra
-          </button>
+          {hasProblems ? (
+            <button type="button" className="btn-primary btn-block" disabled>
+              Finalizar compra
+            </button>
+          ) : (
+            <Link to="/checkout" className="btn-primary btn-block">
+              Finalizar compra
+            </Link>
+          )}
           {hasProblems && (
             <p className="cart-item-problem">Resolva os itens destacados antes de continuar.</p>
           )}

@@ -18,7 +18,12 @@ export function AppLayout() {
             <NavLink to="/" end>
               Produtos
             </NavLink>
-            {user && <NavLink to="/account/addresses">Endereços</NavLink>}
+            {user && (
+              <>
+                <NavLink to="/orders">Pedidos</NavLink>
+                <NavLink to="/account/addresses">Endereços</NavLink>
+              </>
+            )}
           </nav>
 
           <div className="app-header-actions">

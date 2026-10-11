@@ -6,9 +6,12 @@ import { AppLayout } from './components/AppLayout'
 import { EditAddressPage, NewAddressPage } from './pages/AddressFormPage'
 import { AddressesPage } from './pages/AddressesPage'
 import { CartPage } from './pages/CartPage'
+import { CheckoutPage } from './pages/CheckoutPage'
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage'
 import { HomePage } from './pages/HomePage'
 import { LoginPage } from './pages/LoginPage'
+import { OrderDetailPage } from './pages/OrderDetailPage'
+import { OrdersPage } from './pages/OrdersPage'
 import { ProductPage } from './pages/ProductPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { ResetPasswordPage } from './pages/ResetPasswordPage'
@@ -35,6 +38,9 @@ function App() {
 
               <Route element={<ProtectedRoute />}>
                 <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/orders" element={<OrdersPage />} />
+                <Route path="/orders/:id" element={<OrderDetailPage />} />
                 <Route path="/account/addresses" element={<AddressesPage />} />
                 <Route path="/account/addresses/new" element={<NewAddressPage />} />
                 <Route path="/account/addresses/:id/edit" element={<EditAddressPage />} />

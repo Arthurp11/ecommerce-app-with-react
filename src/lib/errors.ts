@@ -4,6 +4,7 @@ import { ApiError } from './api'
 const TRANSLATIONS: Record<string, string> = {
   'Invalid credentials': 'E-mail ou senha inválidos.',
   'Invalid or expired password reset token': 'Link de redefinição inválido ou expirado.',
+  'Cart is empty': 'Seu carrinho está vazio.',
 }
 
 const PATTERNS: [RegExp, (match: RegExpExecArray) => string][] = [
@@ -12,17 +13,23 @@ const PATTERNS: [RegExp, (match: RegExpExecArray) => string][] = [
     /^Only (\d+) unit\(s\) of (.+) available$/,
     ([, stock, name]) => `Só há ${stock} unidade(s) de ${name} disponível(is).`,
   ],
+  [/^(.+) is no longer available$/, ([, name]) => `${name} não está mais disponível.`],
+  [/^Order with ID \d+ can no longer be cancelled$/, () => 'Este pedido não pode mais ser cancelado.'],
 ]
+
+function translate(message: string) {
+  for (const [pattern, toMessage] of PATTERNS) {
+    const match = pattern.exec(message)
+    if (match) return toMessage(match)
+  }
+  return TRANSLATIONS[message] ?? message
+}
 
 export function getErrorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     if (error.status === 429) return 'Muitas tentativas. Aguarde um minuto e tente novamente.'
-
-    for (const [pattern, translate] of PATTERNS) {
-      const match = pattern.exec(error.message)
-      if (match) return translate(match)
-    }
-    return TRANSLATIONS[error.message] ?? error.message
+    // O checkout junta vários problemas de estoque com "; ".
+    return error.message.split('; ').map(translate).join('\n')
   }
   if (error instanceof TypeError) return 'Não foi possível conectar ao servidor.'
   return 'Erro inesperado. Tente novamente.'
